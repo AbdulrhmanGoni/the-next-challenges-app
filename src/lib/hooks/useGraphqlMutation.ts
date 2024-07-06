@@ -1,22 +1,42 @@
-import { useEffect, useState } from "react";
 import graphglMutationAction from "../graphql/graphglMutationAction";
-import { GraphqlQueryOptions, GraphqlQueryType } from "../graphql/types";
+import { GraphqlQueryType } from "../graphql/types";
+import { useFormState } from "react-dom";
 
-export default function useGraphqlMutation<T>(
-  query: GraphqlQueryType<T>,
-  options?: GraphqlQueryOptions<T>
+type Variables<T> = { [variable: string]: T };
+type MutationActionPayload<T> = {
+  variables: Variables<T>;
+  query: GraphqlQueryType<T>;
+};
+
+export default function useGraphqlMutation<T, MutationActionResponse>() {
+  const [state, action, isLoading] = useFormState<
+    MutationActionResponse,
+    MutationActionPayload<T>
+  >(mutationAction, {} as Awaited<MutationActionResponse>);
+
+  return { state, isLoading, action };
+}
+
+async function mutationAction<MutationActionResponse, T>(
+  _previousState: MutationActionResponse,
+  payload: MutationActionPayload<T>
 ) {
-  const [isLoading, setIsLoading] = useState(false);
+  try {
+    const response = await graphglMutationAction<MutationActionResponse>(
+      JSON.stringify(payload.query),
+      payload.variables
+    );
 
-  useEffect(() => {
-    setIsLoading(true);
-    graphglMutationAction<T>(JSON.stringify(query), options?.variables)
-      .then(() => {})
-      .catch(() => {})
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  return { isLoading };
+    if (response.data) {
+      return response.data;
+    } else {
+      return {
+        error: response.errors?.[0].message,
+      } as MutationActionResponse;
+    }
+  } catch (error: any) {
+    return {
+      error: error?.message,
+    } as MutationActionResponse;
+  }
 }
