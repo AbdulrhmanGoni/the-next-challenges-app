@@ -4,6 +4,7 @@ import "./globals.css";
 import ApolloClientProvider from "./ApolloClientProvider";
 import { CookiesProvider } from 'next-client-cookies/server';
 import { cn } from "@/lib/utils";
+import UserDataProvider from "./UserDataProvider";
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -21,14 +22,16 @@ export default function RootLayout({
     <html lang="en">
       <CookiesProvider>
         <ApolloClientProvider>
-          <body
-            className={cn(
-              "min-h-screen bg-background font-sans antialiased",
-              openSans.variable
-            )}
-          >
-            {children}
-          </body>
+          <UserDataProvider>
+            <body
+              className={cn(
+                "min-h-screen bg-background font-sans antialiased",
+                openSans.variable
+              )}
+            >
+              {children}
+            </body>
+          </UserDataProvider>
         </ApolloClientProvider>
       </CookiesProvider>
     </html>
