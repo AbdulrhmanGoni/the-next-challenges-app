@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,12 +10,14 @@
 
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;
+    --card-hover: 20 19% 6%;
 
     --popover: 20 14.3% 4.1%;
     --popover-foreground: 60 9.1% 97.8%;
 
     --primary: 20.5 90.2% 48.2%;
     --primary-foreground: 60 9.1% 97.8%;
+    --primary-hover: 14 100% 57% / 15%;
 
     --secondary: 12 6.5% 15.1%;
     --secondary-foreground: 60 9.1% 97.8%;
@@ -69,8 +72,28 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: "Noto Sans Arabic", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
   }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.text-xs {
+  font-weight: 300;
+}
+
+.text-sm {
+  font-weight: 400;
+}
+
+.text-md {
+  font-weight: 600;
+}
+
+.text-lg {
+  font-weight: 900;
 }

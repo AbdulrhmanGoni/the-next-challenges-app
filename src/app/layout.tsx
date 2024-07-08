@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import ApolloClientProvider from "./ApolloClientProvider";
 import { CookiesProvider } from 'next-client-cookies/server';
-import { cn } from "@/lib/utils";
 import UserDataProvider from "./UserDataProvider";
-
-const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,12 +19,7 @@ export default function RootLayout({
       <CookiesProvider>
         <ApolloClientProvider>
           <UserDataProvider>
-            <body
-              className={cn(
-                "min-h-screen bg-background font-sans antialiased",
-                openSans.variable
-              )}
-            >
+            <body className="min-h-screen bg-background antialiased">
               {children}
             </body>
           </UserDataProvider>
