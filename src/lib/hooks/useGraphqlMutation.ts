@@ -3,15 +3,16 @@ import { GraphqlQueryType } from "../graphql/types";
 import { useFormState } from "react-dom";
 
 type Variables<T> = { [variable: string]: T };
-type MutationActionPayload<T> = {
+type MutationActionPayload<T, Res> = {
   variables: Variables<T>;
   query: GraphqlQueryType<T>;
+  onSuccess: (res: Res) => void;
 };
 
 export default function useGraphqlMutation<T, MutationActionResponse>() {
   const [state, action, isLoading] = useFormState<
     MutationActionResponse,
-    MutationActionPayload<T>
+    MutationActionPayload<T, MutationActionResponse>
   >(mutationAction, {} as Awaited<MutationActionResponse>);
 
   return { state, isLoading, action };
@@ -19,7 +20,7 @@ export default function useGraphqlMutation<T, MutationActionResponse>() {
 
 async function mutationAction<MutationActionResponse, T>(
   _previousState: MutationActionResponse,
-  payload: MutationActionPayload<T>
+  payload: MutationActionPayload<T, MutationActionResponse>
 ) {
   try {
     const response = await graphglMutationAction<MutationActionResponse>(
@@ -28,6 +29,7 @@ async function mutationAction<MutationActionResponse, T>(
     );
 
     if (response.data) {
+      payload.onSuccess(response.data);
       return response.data;
     } else {
       return {
