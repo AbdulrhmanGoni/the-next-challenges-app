@@ -19,7 +19,7 @@ export default function RootLayout({
       <CookiesProvider>
         <ApolloClientProvider>
           <UserDataProvider>
-            <body className="min-h-screen bg-background antialiased">
+            <body className="min-h-screen flex flex-col bg-background antialiased">
               {children}
             </body>
           </UserDataProvider>

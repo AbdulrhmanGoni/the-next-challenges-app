@@ -77,6 +77,14 @@
     font-style: normal;
     font-variation-settings: "wdth" 100;
   }
+  *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: hsl(var(--background));
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted));
+  }
   body {
     @apply bg-background text-foreground;
   }
