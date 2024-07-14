@@ -1,3 +1,4 @@
+"use client"
 import {
     BookMarkedIcon,
     HomeIcon,
@@ -5,6 +6,7 @@ import {
     SquarePlusIcon,
     TelescopeIcon
 } from "lucide-react"
+import SidebarItem from "./SidebarItem";
 
 export type SidebarItemType = {
     title: string;
@@ -12,7 +14,7 @@ export type SidebarItemType = {
     Icon: LucideIcon;
 }
 
-export const sidebarItems: SidebarItemType[] = [
+const sidebarItems: SidebarItemType[] = [
     {
         title: "الصفحة الرئيسية",
         link: "/",
@@ -34,3 +36,11 @@ export const sidebarItems: SidebarItemType[] = [
         Icon: BookMarkedIcon
     },
 ]
+
+export default function SidebarItemsList() {
+    return (
+        <ul className="space-y-2">
+            {sidebarItems.map((item) => <SidebarItem key={item.link} item={item} />)}
+        </ul>
+    )
+}
