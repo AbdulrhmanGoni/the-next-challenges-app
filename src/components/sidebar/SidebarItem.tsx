@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Tooltip from '../Tooltip'
-import { SidebarItemType } from './sidebarItemsData';
+import { SidebarItemType } from './SidebarItemsList';
 
 export default function SidebarItem({ item }: { item: SidebarItemType }) {
 
