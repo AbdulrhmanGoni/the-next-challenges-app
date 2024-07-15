@@ -4,7 +4,6 @@ import useGraphqlMutation from "@/lib/hooks/useGraphqlMutation";
 import { gql } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCookies } from "next-client-cookies";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -58,7 +57,6 @@ export default function useLogInFormLogic() {
   >();
 
   const cookies = useCookies();
-  const router = useRouter();
 
   async function onSubmit(userCredentials: z.infer<typeof formSchema>) {
     action({
@@ -66,7 +64,7 @@ export default function useLogInFormLogic() {
       query: LogInMutation,
       onSuccess: (res) => {
         if (res.logInUser?.accessToken) {
-          router.replace("/");
+          location.replace("/");
           cookies.set(accessTokenCookieName, res.logInUser.accessToken);
         }
       },
