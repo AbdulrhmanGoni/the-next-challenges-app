@@ -3,7 +3,6 @@ import useGraphqlMutation from "@/lib/hooks/useGraphqlMutation";
 import { gql } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCookies } from "next-client-cookies";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { logInRawShape } from "./useLogInFormLogic";
@@ -56,7 +55,6 @@ export default function useSignUpFormLogic() {
     SignUpActionResponse
   >();
 
-  const router = useRouter();
   const cookies = useCookies();
 
   async function onSubmit(userData: z.infer<typeof formSchema>) {
@@ -68,8 +66,8 @@ export default function useSignUpFormLogic() {
         variables: { newUser: userData },
         onSuccess: (res) => {
           if (res.signUpUser?.accessToken) {
-            router.replace("/");
             cookies.set(accessTokenCookieName, res.signUpUser.accessToken);
+            location.replace("/");
           }
         },
       });
