@@ -1,9 +1,11 @@
-const arabicIndicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+const arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
 
 export default function convertToArabic(number: number) {
-  return number
+  const arabicNumber = number
     .toString()
     .split("")
-    .map((digit: string) => arabicIndicDigits[+digit])
+    .map((digit: string) => arabicDigits[+digit])
     .join("");
+
+  return number < 0 ? "-" + arabicNumber : arabicNumber;
 }
