@@ -1,7 +1,7 @@
 import Logo from "./Logo";
 import SearchField from "./SearchField";
-import UserAvatar from "../UserAvatar";
 import NotificationsCenterIcon from "./NotificationsCenterIcon";
+import UserAccount from "../UserAccount";
 
 export default function Header() {
     return (
@@ -9,7 +9,7 @@ export default function Header() {
             <Logo />
             <SearchField />
             <NotificationsCenterIcon />
-            <UserAvatar />
+            <UserAccount />
         </div>
     )
 }
