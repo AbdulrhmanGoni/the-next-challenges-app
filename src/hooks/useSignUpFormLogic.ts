@@ -38,6 +38,14 @@ type SignUpActionResponse = {
   error?: string;
 };
 
+type SignUpMutationPayload = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  headline: string;
+  password: string;
+};
+
 export default function useSignUpFormLogic() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,19 +59,19 @@ export default function useSignUpFormLogic() {
   });
 
   const { state, action, isLoading } = useGraphqlMutation<
-    z.infer<typeof formSchema>,
+    SignUpMutationPayload,
     SignUpActionResponse
   >();
 
   const cookies = useCookies();
 
-  async function onSubmit(userData: z.infer<typeof formSchema>) {
-    const { password2, ...newUser } = userData;
+  async function onSubmit(formData: z.infer<typeof formSchema>) {
+    const { password2, ...newUser } = formData;
 
     if (newUser.password === password2) {
       action({
         query: SignUpMutation,
-        variables: { newUser: userData },
+        variables: { newUser },
         onSuccess: (res) => {
           if (res.signUpUser?.accessToken) {
             cookies.set(accessTokenCookieName, res.signUpUser.accessToken);
