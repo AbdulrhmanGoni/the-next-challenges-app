@@ -17,6 +17,7 @@ type Post = {
 type usersVotes = "upvote" | "downvote" | null;
 
 type User = {
+  id: string;
   firstName: string;
   lastName: string;
   headline: string;
@@ -33,13 +34,22 @@ type PostResource = {
 };
 
 type PostThumbnail = {
+  id: string;
   src: string;
+};
+
+type PostCommentOwner = {
+  firstName: string;
+  lastName: string;
+  headline: string;
+  avatar: string;
 };
 
 type PostComment = {
   id: string;
   commenterId: string;
   comment: string;
+  owner: PostCommentOwner;
   createdAt: number;
   upvotes: number;
   downvotes: number;
