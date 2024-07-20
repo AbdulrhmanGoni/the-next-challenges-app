@@ -14,7 +14,7 @@ export default function timeAgo(dateParam: number | Date) {
   }
 
   if (seconds < 120) {
-    return "منذ حوالي دقيقة";
+    return "منذ أكثر من دقيقة";
   }
 
   const minutes = Math.round(seconds / 60);
@@ -23,7 +23,7 @@ export default function timeAgo(dateParam: number | Date) {
   }
 
   if (minutes < 120) {
-    return "منذ حوالي ساعة";
+    return "منذ أكثر من ساعة";
   }
 
   const hours = Math.round(minutes / 60);
@@ -32,7 +32,7 @@ export default function timeAgo(dateParam: number | Date) {
   }
 
   if (hours < 48) {
-    return "منذ حوالي يوم";
+    return "منذ أكثر من يوم";
   }
 
   const days = Math.round(hours / 24);
@@ -41,7 +41,7 @@ export default function timeAgo(dateParam: number | Date) {
   }
 
   if (days < 14) {
-    return "من حوالي اسبوع";
+    return "منذ أكثر من اسبوع";
   }
 
   const weeks = Math.round(days / 7);
@@ -50,7 +50,7 @@ export default function timeAgo(dateParam: number | Date) {
   }
 
   if (weeks < 8) {
-    return "منذ حوالي شهر";
+    return "منذ أكثر من شهر";
   }
 
   const monthes = Math.round(weeks / 4);
@@ -59,7 +59,7 @@ export default function timeAgo(dateParam: number | Date) {
   }
 
   if (monthes < 24) {
-    return "من حوالي سنة";
+    return "منذ أكثر من سنة";
   }
 
   const years = Math.round(monthes / 12);
