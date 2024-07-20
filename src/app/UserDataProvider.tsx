@@ -6,6 +6,7 @@ import { createContext } from "react";
 const USER_DATA_QUERY = gql`
   query UserData {
     userData {
+      id
       firstName
       lastName
       headline
@@ -20,10 +21,15 @@ const USER_DATA_QUERY = gql`
 type UserDataState = {
   userData: User | null;
   isLoading: boolean;
+  requestDone: boolean;
   error?: Error;
 }
 
-export const UserDataContext = createContext<UserDataState>({ userData: null, isLoading: false });
+export const UserDataContext = createContext<UserDataState>({
+  userData: null,
+  isLoading: false,
+  requestDone: false,
+});
 
 export default function UserDataProvider({ children }: React.PropsWithChildren) {
 
@@ -31,7 +37,10 @@ export default function UserDataProvider({ children }: React.PropsWithChildren) 
 
   return (
     <UserDataContext.Provider
-      value={{ ...userDataState, userData: userDataState.data?.userData || null }}
+      value={{
+        ...userDataState,
+        userData: userDataState.data?.userData || null
+      }}
     >
       {children}
     </UserDataContext.Provider>
