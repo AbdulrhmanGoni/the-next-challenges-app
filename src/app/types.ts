@@ -36,10 +36,18 @@ type PostThumbnail = {
   src: string;
 };
 
+type PostCommentOwner = {
+  firstName: string;
+  lastName: string;
+  headline: string;
+  avatar: string;
+};
+
 type PostComment = {
   id: string;
   commenterId: string;
   comment: string;
+  owner: PostCommentOwner;
   createdAt: number;
   upvotes: number;
   downvotes: number;
