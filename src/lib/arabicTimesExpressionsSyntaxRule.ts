@@ -21,8 +21,8 @@ export const timeExpressionsSyntaxRules = {
   second: {
     one: "ثانية واحدة",
     two: "ثانيتين",
-    few: "ثانية",
-    many: "ثواني",
+    few: "ثواني",
+    many: "ثانية",
   },
   minute: {
     one: "دقيقة واحدة",
