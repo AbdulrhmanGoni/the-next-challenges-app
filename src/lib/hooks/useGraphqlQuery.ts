@@ -8,6 +8,7 @@ export default function useGraphqlQuery<T>(
 ) {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(false);
+  const [requestDone, setRequestDone] = useState(false);
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -21,8 +22,9 @@ export default function useGraphqlQuery<T>(
       })
       .finally(() => {
         setIsLoading(false);
+        setRequestDone(true);
       });
   }, []);
 
-  return { data, setData, isLoading, error };
+  return { data, setData, isLoading, error, requestDone };
 }
