@@ -17,6 +17,7 @@ type Post = {
 type usersVotes = "upvote" | "downvote" | null;
 
 type User = {
+  id: string;
   firstName: string;
   lastName: string;
   headline: string;
@@ -33,6 +34,7 @@ type PostResource = {
 };
 
 type PostThumbnail = {
+  id: string;
   src: string;
 };
 
