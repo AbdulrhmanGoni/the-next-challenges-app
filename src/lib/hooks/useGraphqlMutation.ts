@@ -1,6 +1,6 @@
 import graphglMutationAction from "../graphql/graphglMutationAction";
 import { GraphqlQueryType } from "../graphql/types";
-import { useFormState } from "react-dom";
+import useRequestState from "../../hooks/useRequestState";
 
 type Variables<T> = { [variable: string]: T };
 type MutationActionPayload<T, Res> = {
@@ -10,35 +10,35 @@ type MutationActionPayload<T, Res> = {
 };
 
 export default function useGraphqlMutation<T, MutationActionResponse>() {
-  const [state, action, isLoading] = useFormState<
-    MutationActionResponse,
-    MutationActionPayload<T, MutationActionResponse>
-  >(mutationAction, {} as Awaited<MutationActionResponse>);
+  const { data, setData, isLoading, setIsLoading, error, setError } =
+    useRequestState<MutationActionResponse>();
 
-  return { state, isLoading, action };
-}
-
-async function mutationAction<MutationActionResponse, T>(
-  _previousState: MutationActionResponse,
-  payload: MutationActionPayload<T, MutationActionResponse>
-) {
-  try {
-    const response = await graphglMutationAction<MutationActionResponse>(
+  async function action(
+    payload: MutationActionPayload<T, MutationActionResponse>
+  ) {
+    setIsLoading(true);
+    graphglMutationAction<MutationActionResponse>(
       JSON.stringify(payload.query),
       payload.variables
-    );
-
-    if (response.data) {
-      payload.onSuccess(response.data);
-      return response.data;
-    } else {
-      return {
-        error: response.errors?.[0].message,
-      } as MutationActionResponse;
-    }
-  } catch (error: any) {
-    return {
-      error: error?.message,
-    } as MutationActionResponse;
+    )
+      .then((response) => {
+        if (response.data) {
+          payload.onSuccess(response.data);
+          setData(response.data);
+        } else {
+          if (response.errors) {
+            setError(response.errors[0].message);
+          }
+        }
+      })
+      .catch((error) => setError(error?.message))
+      .finally(() => setIsLoading(false));
   }
+
+  return {
+    state: data,
+    isLoading,
+    error: error,
+    action,
+  };
 }
