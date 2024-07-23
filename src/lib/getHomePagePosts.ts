@@ -12,6 +12,12 @@ const getPostsQuery = gql`
       upvotes
       downvotes
       userVote
+      author {
+        firstName
+        lastName
+        headline
+        avatar
+      }
       thumbnail {
         src
       }
