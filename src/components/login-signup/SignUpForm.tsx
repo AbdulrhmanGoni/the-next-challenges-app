@@ -16,13 +16,13 @@ import LoadingOverlay from "../LoadingOverlay"
 
 export default function SignUpForm() {
 
-    const { form, onSubmit, state, isLoading } = useSignUpFormLogic()
+    const { form, onSubmit, error, isLoading } = useSignUpFormLogic();
 
     return (
         <FormCard
             title="إنشاء حساب"
             description="أدخل معلوماتك لإنشاء حساب جديد لك"
-            errorMessage={state.error}
+            errorMessage={error}
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mx-auto max-w-sm">

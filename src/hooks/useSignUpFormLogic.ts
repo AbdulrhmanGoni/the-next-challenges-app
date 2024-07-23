@@ -58,7 +58,7 @@ export default function useSignUpFormLogic() {
     },
   });
 
-  const { state, action, isLoading } = useGraphqlMutation<
+  const { state, error, action, isLoading } = useGraphqlMutation<
     SignUpMutationPayload,
     SignUpActionResponse
   >();
@@ -94,5 +94,6 @@ export default function useSignUpFormLogic() {
     onSubmit,
     isLoading,
     state,
+    error,
   };
 }

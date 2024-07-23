@@ -16,13 +16,13 @@ import LoadingOverlay from "../LoadingOverlay"
 
 export default function LogInForm() {
 
-    const { form, onSubmit, state, isLoading } = useLogInFormLogic();
+    const { form, onSubmit, error, isLoading } = useLogInFormLogic();
 
     return (
         <FormCard
             title="تسجيل الدخول"
             description="أدخل معلومات حسابك الصحيحة لتسجيل دخولك"
-            errorMessage={state.error}
+            errorMessage={error}
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mx-auto max-w-sm">
