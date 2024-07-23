@@ -12,16 +12,17 @@ import { Input } from "@/components/shadcn-ui/input"
 import useSignUpFormLogic from "@/hooks/useSignUpFormLogic"
 import FormCard from "./FormCard"
 import Link from "next/link"
+import LoadingOverlay from "../LoadingOverlay"
 
 export default function SignUpForm() {
 
-    const { form, onSubmit, state, isLoading } = useSignUpFormLogic()
+    const { form, onSubmit, error, isLoading } = useSignUpFormLogic();
 
     return (
         <FormCard
             title="إنشاء حساب"
             description="أدخل معلوماتك لإنشاء حساب جديد لك"
-            errorMessage={state.error}
+            errorMessage={error}
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mx-auto max-w-sm">
@@ -124,10 +125,11 @@ export default function SignUpForm() {
                         type="submit"
                         className="w-full"
                     >
-                        {isLoading ? "جاري إنشاء حساب..." : "إنشاء حساب"}
+                        إنشاء حساب
                     </Button>
                 </form>
             </Form>
+            {isLoading && <LoadingOverlay />}
         </FormCard>
     )
 }

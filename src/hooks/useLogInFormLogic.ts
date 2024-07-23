@@ -51,7 +51,7 @@ export default function useLogInFormLogic() {
     },
   });
 
-  const { state, action, isLoading } = useGraphqlMutation<
+  const { state, error, action, isLoading } = useGraphqlMutation<
     z.infer<typeof formSchema>,
     LogInActionResponse
   >();
@@ -76,5 +76,6 @@ export default function useLogInFormLogic() {
     onSubmit,
     state,
     isLoading,
+    error,
   };
 }
