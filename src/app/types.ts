@@ -6,6 +6,7 @@ type Post = {
   publishedAt: number;
   userVote: usersVotes;
   authorId: string;
+  author: PostAuther;
   category: string;
   tags: string[];
   upvotes: number;
@@ -16,16 +17,21 @@ type Post = {
 
 type usersVotes = "upvote" | "downvote" | null;
 
-type User = {
-  id: string;
+type UserBasicData = {
   firstName: string;
   lastName: string;
   headline: string;
-  email: string;
   avatar: string;
+};
+
+type User = UserBasicData & {
+  id: string;
+  email: string;
   role: string;
   bookmarks: Post["id"][];
 };
+
+type PostAuther = UserBasicData;
 
 type PostResource = {
   title: string;
@@ -38,12 +44,7 @@ type PostThumbnail = {
   src: string;
 };
 
-type PostCommentOwner = {
-  firstName: string;
-  lastName: string;
-  headline: string;
-  avatar: string;
-};
+type PostCommentOwner = UserBasicData;
 
 type PostComment = {
   id: string;
