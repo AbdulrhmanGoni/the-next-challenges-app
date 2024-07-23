@@ -12,10 +12,11 @@ import {
 import useLogInFormLogic from "@/hooks/useLogInFormLogic"
 import FormCard from "./FormCard"
 import Link from "next/link"
+import LoadingOverlay from "../LoadingOverlay"
 
 export default function LogInForm() {
 
-    const { form, onSubmit, state } = useLogInFormLogic();
+    const { form, onSubmit, state, isLoading } = useLogInFormLogic();
 
     return (
         <FormCard
@@ -63,6 +64,7 @@ export default function LogInForm() {
                     </Button>
                 </form>
             </Form>
+            {isLoading && <LoadingOverlay />}
         </FormCard>
     )
 }
