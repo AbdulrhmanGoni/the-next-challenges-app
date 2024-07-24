@@ -10,7 +10,10 @@ const USER_DATA_QUERY = gql`
       firstName
       lastName
       headline
-      avatar
+      avatar {
+        id
+        src
+      }
       email
       role
       bookmarks
