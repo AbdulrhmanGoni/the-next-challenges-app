@@ -16,7 +16,10 @@ const getPostsQuery = gql`
         firstName
         lastName
         headline
-        avatar
+        avatar {
+          id
+          src
+        }
       }
       thumbnail {
         src

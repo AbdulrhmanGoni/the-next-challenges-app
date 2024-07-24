@@ -21,7 +21,7 @@ type UserBasicData = {
   firstName: string;
   lastName: string;
   headline: string;
-  avatar: Image;
+  avatar: Image | null;
 };
 
 type Image = {
