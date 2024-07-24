@@ -21,7 +21,12 @@ type UserBasicData = {
   firstName: string;
   lastName: string;
   headline: string;
-  avatar: string;
+  avatar: Image;
+};
+
+type Image = {
+  id: string;
+  src: string;
 };
 
 type User = UserBasicData & {
@@ -39,10 +44,7 @@ type PostResource = {
   link: string;
 };
 
-type PostThumbnail = {
-  id: string;
-  src: string;
-};
+type PostThumbnail = Image;
 
 type PostCommentOwner = UserBasicData;
 
