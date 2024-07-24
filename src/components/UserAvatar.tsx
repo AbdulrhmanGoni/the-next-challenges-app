@@ -11,7 +11,7 @@ export default function UserAvatar() {
         isLoading ? <Skeleton className="w-10 h-10 rounded-full" /> :
             userData &&
             <Avatar
-                src={userData?.avatar}
+                src={userData?.avatar?.src}
                 fallback={(userData?.firstName[0] + userData?.lastName[0]).toUpperCase()}
             />
     )
