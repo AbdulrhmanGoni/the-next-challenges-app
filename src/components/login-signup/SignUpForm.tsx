@@ -1,18 +1,12 @@
 "use client"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/shadcn-ui/form"
+import { Form, FormField } from "@/components/shadcn-ui/form"
 import { Button } from "@/components/shadcn-ui/button"
 import { Input } from "@/components/shadcn-ui/input"
 import useSignUpFormLogic from "@/hooks/useSignUpFormLogic"
 import FormCard from "./FormCard"
 import Link from "next/link"
 import LoadingOverlay from "../LoadingOverlay"
+import FormFieldItem from "../FormFieldItem"
 
 export default function SignUpForm() {
 
@@ -32,13 +26,9 @@ export default function SignUpForm() {
                                 control={form.control}
                                 name="firstName"
                                 render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>الإسم الأول</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="الإسم الأول" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                                    <FormFieldItem label="الإسم الأول">
+                                        <Input placeholder="الإسم الأول" {...field} />
+                                    </FormFieldItem>
                                 )}
                             />
                         </div>
@@ -47,13 +37,22 @@ export default function SignUpForm() {
                                 control={form.control}
                                 name="lastName"
                                 render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>الإسم الثاني</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="الإسم الثاني" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                                    <FormFieldItem label="الإسم الثاني">
+                                        <Input placeholder="الإسم الثاني" {...field} />
+                                    </FormFieldItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="flex-1">
+                            <FormField
+                                control={form.control}
+                                name="headline"
+                                render={({ field }) => (
+                                    <FormFieldItem label="العنوان الرئيسي او التخصص">
+                                        <Input placeholder="العنوان الرئيسي او التخصص" {...field} />
+                                    </FormFieldItem>
                                 )}
                             />
                         </div>
@@ -61,30 +60,11 @@ export default function SignUpForm() {
                     <div className="grid gap-2">
                         <FormField
                             control={form.control}
-                            name="headline"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>العنوان الرئيسي او التخصص</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="العنوان الرئيسي او التخصص" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                    <div className="grid gap-2">
-                        <FormField
-                            control={form.control}
                             name="email"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>البريد الإلكتروني</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="البريد الإلكتروني" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
+                                <FormFieldItem label="البريد الإلكتروني">
+                                    <Input placeholder="البريد الإلكتروني" {...field} />
+                                </FormFieldItem>
                             )}
                         />
                     </div>
@@ -93,13 +73,9 @@ export default function SignUpForm() {
                             control={form.control}
                             name="password"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>كلمة المرور</FormLabel>
-                                    <FormControl>
-                                        <Input type="password" placeholder="كلمة المرور" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
+                                <FormFieldItem label="كلمة المرور">
+                                    <Input type="password" placeholder="كلمة المرور" {...field} />
+                                </FormFieldItem>
                             )}
                         />
                     </div>
@@ -108,13 +84,9 @@ export default function SignUpForm() {
                             control={form.control}
                             name="password2"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>كلمة المرور مرة اخرى</FormLabel>
-                                    <FormControl>
-                                        <Input type="password" placeholder="كلمة المرور مرة اخرى" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
+                                <FormFieldItem label="كلمة المرور مرة اخرى">
+                                    <Input type="password" placeholder="كلمة المرور مرة اخرى" {...field} />
+                                </FormFieldItem>
                             )}
                         />
                     </div>
