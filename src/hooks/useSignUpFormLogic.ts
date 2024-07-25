@@ -3,10 +3,17 @@ import useGraphqlMutation from "@/lib/hooks/useGraphqlMutation";
 import { gql } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCookies } from "next-client-cookies";
-import { useForm } from "react-hook-form";
+import { ControllerRenderProps, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { logInRawShape } from "./useLogInFormLogic";
 import convertToArabic from "@/lib/convertToArabic";
+import useImagesCloud from "./useImageUploader";
+import {
+  invalidImageTypeMessage,
+  tooLargeImageMessage,
+  validateImageFileSize,
+  validateImageFileType,
+} from "@/utils/imageFileValidation";
 
 const namesRole = (fieldName: string) => {
   return z
@@ -19,6 +26,11 @@ const formSchema = z.object({
   firstName: namesRole("الإسم الأول"),
   lastName: namesRole("الإسم الأخير"),
   headline: namesRole("العنوان الرئيسي او التخصص"),
+  avatar: z
+    .instanceof(File)
+    .refine(validateImageFileType, invalidImageTypeMessage)
+    .refine(validateImageFileSize, tooLargeImageMessage)
+    .optional(),
   ...logInRawShape,
   password2: logInRawShape.password,
 });
@@ -38,23 +50,32 @@ type SignUpActionResponse = {
   error?: string;
 };
 
+type SignUpFormSchemaType = z.infer<typeof formSchema>;
+export type SignUpFormType = UseFormReturn<SignUpFormSchemaType>;
+
+export type SignUpFormFieldType<field extends keyof SignUpFormSchemaType> =
+  ControllerRenderProps<SignUpFormSchemaType, field>;
+
 type SignUpMutationPayload = {
   firstName: string;
   lastName: string;
   email: string;
   headline: string;
   password: string;
+  avatar?: User["avatar"];
 };
 
 export default function useSignUpFormLogic() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<SignUpFormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: undefined,
-      lastName: undefined,
-      email: undefined,
-      headline: undefined,
-      password: undefined,
+      firstName: "",
+      lastName: "",
+      avatar: undefined,
+      email: "",
+      headline: "",
+      password: "",
+      password2: "",
     },
   });
 
@@ -64,14 +85,28 @@ export default function useSignUpFormLogic() {
   >();
 
   const cookies = useCookies();
+  const { uploadImage, isLoading: imageIsUploading } = useImagesCloud();
 
-  async function onSubmit(formData: z.infer<typeof formSchema>) {
-    const { password2, ...newUser } = formData;
-
+  async function onSubmit(formData: SignUpFormSchemaType) {
+    const { password2, avatar, ...newUser } = formData;
     if (newUser.password === password2) {
+      let userAvatar;
+      if (avatar) {
+        userAvatar = await uploadImage(avatar, "userAvatar");
+        if (!userAvatar) {
+          form.setError("avatar", { message: "فشل رفع صورة الملف الشخصي" });
+          return;
+        }
+      }
+
       action({
         query: SignUpMutation,
-        variables: { newUser },
+        variables: {
+          newUser: {
+            ...newUser,
+            avatar: userAvatar,
+          },
+        },
         onSuccess: (res) => {
           if (res.signUpUser?.accessToken) {
             cookies.set(accessTokenCookieName, res.signUpUser.accessToken);
@@ -92,7 +127,7 @@ export default function useSignUpFormLogic() {
   return {
     form,
     onSubmit,
-    isLoading,
+    isLoading: isLoading || imageIsUploading,
     state,
     error,
   };
