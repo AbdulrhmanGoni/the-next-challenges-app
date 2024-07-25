@@ -5,7 +5,7 @@ import PageMessage from "../PageMessage";
 export default function HomePagePostsGridError() {
 
     return (
-        <div className="w-full">
+        <div className="w-full h-full">
             <PageMessage
                 action={() => { location.reload() }}
                 actionMessage="إعادة المحاولة"
