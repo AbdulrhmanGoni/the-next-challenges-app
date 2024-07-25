@@ -7,6 +7,12 @@ import { ControllerRenderProps, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { logInRawShape } from "./useLogInFormLogic";
 import convertToArabic from "@/lib/convertToArabic";
+import {
+  invalidImageTypeMessage,
+  tooLargeImageMessage,
+  validateImageFileSize,
+  validateImageFileType,
+} from "@/utils/imageFileValidation";
 
 const namesRole = (fieldName: string) => {
   return z
@@ -19,6 +25,11 @@ const formSchema = z.object({
   firstName: namesRole("الإسم الأول"),
   lastName: namesRole("الإسم الأخير"),
   headline: namesRole("العنوان الرئيسي او التخصص"),
+  avatar: z
+    .instanceof(File)
+    .refine(validateImageFileType, invalidImageTypeMessage)
+    .refine(validateImageFileSize, tooLargeImageMessage)
+    .optional(),
   ...logInRawShape,
   password2: logInRawShape.password,
 });
@@ -50,17 +61,20 @@ type SignUpMutationPayload = {
   email: string;
   headline: string;
   password: string;
+  avatar?: User["avatar"];
 };
 
 export default function useSignUpFormLogic() {
   const form = useForm<SignUpFormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: undefined,
-      lastName: undefined,
-      email: undefined,
-      headline: undefined,
-      password: undefined,
+      firstName: "",
+      lastName: "",
+      avatar: undefined,
+      email: "",
+      headline: "",
+      password: "",
+      password2: "",
     },
   });
 
@@ -72,8 +86,7 @@ export default function useSignUpFormLogic() {
   const cookies = useCookies();
 
   async function onSubmit(formData: SignUpFormSchemaType) {
-    const { password2, ...newUser } = formData;
-
+    const { password2, avatar, ...newUser } = formData;
     if (newUser.password === password2) {
       action({
         query: SignUpMutation,
