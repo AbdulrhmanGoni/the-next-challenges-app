@@ -7,6 +7,7 @@ import FormCard from "./FormCard"
 import Link from "next/link"
 import LoadingOverlay from "../LoadingOverlay"
 import FormFieldItem from "../FormFieldItem"
+import UserAvatarField from "./UserAvatarField"
 
 export default function SignUpForm() {
 
@@ -46,6 +47,7 @@ export default function SignUpForm() {
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
+                        <UserAvatarField form={form} />
                         <div className="flex-1">
                             <FormField
                                 control={form.control}
