@@ -7,6 +7,7 @@ import { ControllerRenderProps, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { logInRawShape } from "./useLogInFormLogic";
 import convertToArabic from "@/lib/convertToArabic";
+import useImagesCloud from "./useImageUploader";
 import {
   invalidImageTypeMessage,
   tooLargeImageMessage,
@@ -84,13 +85,28 @@ export default function useSignUpFormLogic() {
   >();
 
   const cookies = useCookies();
+  const { uploadImage, isLoading: imageIsUploading } = useImagesCloud();
 
   async function onSubmit(formData: SignUpFormSchemaType) {
     const { password2, avatar, ...newUser } = formData;
     if (newUser.password === password2) {
+      let userAvatar;
+      if (avatar) {
+        userAvatar = await uploadImage(avatar, "userAvatar");
+        if (!userAvatar) {
+          form.setError("avatar", { message: "فشل رفع صورة الملف الشخصي" });
+          return;
+        }
+      }
+
       action({
         query: SignUpMutation,
-        variables: { newUser },
+        variables: {
+          newUser: {
+            ...newUser,
+            avatar: userAvatar,
+          },
+        },
         onSuccess: (res) => {
           if (res.signUpUser?.accessToken) {
             cookies.set(accessTokenCookieName, res.signUpUser.accessToken);
@@ -111,7 +127,7 @@ export default function useSignUpFormLogic() {
   return {
     form,
     onSubmit,
-    isLoading,
+    isLoading: isLoading || imageIsUploading,
     state,
     error,
   };
