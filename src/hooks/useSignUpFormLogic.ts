@@ -3,7 +3,7 @@ import useGraphqlMutation from "@/lib/hooks/useGraphqlMutation";
 import { gql } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCookies } from "next-client-cookies";
-import { useForm } from "react-hook-form";
+import { ControllerRenderProps, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { logInRawShape } from "./useLogInFormLogic";
 import convertToArabic from "@/lib/convertToArabic";
@@ -38,6 +38,12 @@ type SignUpActionResponse = {
   error?: string;
 };
 
+type SignUpFormSchemaType = z.infer<typeof formSchema>;
+export type SignUpFormType = UseFormReturn<SignUpFormSchemaType>;
+
+export type SignUpFormFieldType<field extends keyof SignUpFormSchemaType> =
+  ControllerRenderProps<SignUpFormSchemaType, field>;
+
 type SignUpMutationPayload = {
   firstName: string;
   lastName: string;
@@ -47,7 +53,7 @@ type SignUpMutationPayload = {
 };
 
 export default function useSignUpFormLogic() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<SignUpFormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: undefined,
@@ -65,7 +71,7 @@ export default function useSignUpFormLogic() {
 
   const cookies = useCookies();
 
-  async function onSubmit(formData: z.infer<typeof formSchema>) {
+  async function onSubmit(formData: SignUpFormSchemaType) {
     const { password2, ...newUser } = formData;
 
     if (newUser.password === password2) {
