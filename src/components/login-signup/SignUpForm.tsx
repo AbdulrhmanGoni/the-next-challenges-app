@@ -16,12 +16,13 @@ export default function SignUpForm() {
         <FormCard
             title="إنشاء حساب"
             description="أدخل معلوماتك لإنشاء حساب جديد لك"
+            className="max-w-xl"
             errorMessage={error}
         >
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mx-auto max-w-sm">
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="grid gap-2">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mx-auto max-w-xl">
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
                             <FormField
                                 control={form.control}
                                 name="firstName"
@@ -32,7 +33,7 @@ export default function SignUpForm() {
                                 )}
                             />
                         </div>
-                        <div className="grid gap-2">
+                        <div>
                             <FormField
                                 control={form.control}
                                 name="lastName"
@@ -57,7 +58,7 @@ export default function SignUpForm() {
                             />
                         </div>
                     </div>
-                    <div className="grid gap-2">
+                    <div>
                         <FormField
                             control={form.control}
                             name="email"
@@ -68,7 +69,7 @@ export default function SignUpForm() {
                             )}
                         />
                     </div>
-                    <div className="grid gap-2">
+                    <div>
                         <FormField
                             control={form.control}
                             name="password"
@@ -79,7 +80,7 @@ export default function SignUpForm() {
                             )}
                         />
                     </div>
-                    <div className="grid gap-2">
+                    <div>
                         <FormField
                             control={form.control}
                             name="password2"
