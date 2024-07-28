@@ -2,7 +2,6 @@ import { ReactNode, RefAttributes } from 'react';
 import {
     Tooltip as TooltipContainer,
     TooltipContent,
-    TooltipProvider,
     TooltipTrigger
 } from './shadcn-ui/tooltip'
 import {
@@ -12,7 +11,7 @@ import {
     TooltipContentProps
 } from '@radix-ui/react-tooltip';
 
-interface TooltipProps {
+export interface TooltipProps {
     children: ReactNode;
     tooltipContent?: string;
     providerProps?: TooltipProviderProps;
@@ -25,21 +24,19 @@ export default function Tooltip({
     children,
     tooltipContent,
     triggerProps,
-    providerProps,
     containerProps,
     contentProps
 }: TooltipProps) {
 
-    return (!!tooltipContent ?
-        <TooltipProvider {...providerProps}>
-            <TooltipContainer delayDuration={200} {...containerProps}>
-                <TooltipTrigger {...triggerProps}>
-                    {children}
-                </TooltipTrigger>
-                <TooltipContent {...contentProps}>
-                    <p>{tooltipContent}</p>
-                </TooltipContent>
-            </TooltipContainer>
-        </TooltipProvider> : children
+    return (!
+        !tooltipContent ?
+        <TooltipContainer delayDuration={200} {...containerProps}>
+            <TooltipTrigger {...triggerProps}>
+                {children}
+            </TooltipTrigger>
+            <TooltipContent {...contentProps}>
+                <p>{tooltipContent}</p>
+            </TooltipContent>
+        </TooltipContainer> : children
     )
 }

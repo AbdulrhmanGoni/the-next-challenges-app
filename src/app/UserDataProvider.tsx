@@ -1,5 +1,5 @@
 "use client"
-import useGraphqlQuery from "@/lib/hooks/useGraphqlQuery";
+import useGraphqlQuery from "@/hooks/useGraphqlQuery";
 import { gql } from "@apollo/client";
 import { createContext } from "react";
 

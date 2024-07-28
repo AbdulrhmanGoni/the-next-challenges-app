@@ -1,6 +1,6 @@
 import graphglMutationAction from "../graphql/graphglMutationAction";
 import { GraphqlQueryType } from "../graphql/types";
-import useRequestState from "../../hooks/useRequestState";
+import useRequestState from "./useRequestState";
 
 type Variables<T> = { [variable: string]: T };
 type MutationActionPayload<T, Res> = {

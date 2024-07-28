@@ -1,4 +1,4 @@
-import graphglQueryAction from "@/lib/graphql/graphglQueryAction";
+import graphglQueryAction from "@/graphql/graphglQueryAction";
 import { gql } from "@apollo/client";
 
 const getPostsQuery = gql`

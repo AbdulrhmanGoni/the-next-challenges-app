@@ -3,6 +3,7 @@ import "./globals.css";
 import ApolloClientProvider from "./ApolloClientProvider";
 import { CookiesProvider } from 'next-client-cookies/server';
 import UserDataProvider from "./UserDataProvider";
+import { TooltipProvider } from "@/components/shadcn-ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +20,11 @@ export default function RootLayout({
       <CookiesProvider>
         <ApolloClientProvider>
           <UserDataProvider>
-            <body className="min-h-screen flex flex-col bg-background antialiased">
-              {children}
-            </body>
+            <TooltipProvider>
+              <body className="min-h-screen flex flex-col bg-background antialiased">
+                {children}
+              </body>
+            </TooltipProvider>
           </UserDataProvider>
         </ApolloClientProvider>
       </CookiesProvider>
