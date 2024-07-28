@@ -1,8 +1,7 @@
-import { AlertOctagon } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "../shadcn-ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn-ui/card";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import Alert from "../Alert";
 
 interface FormCardProps {
     title: string;
@@ -22,13 +21,10 @@ export default function FormCard(props: FormCardProps) {
                 </CardDescription>
                 {
                     props.errorMessage &&
-                    <Alert variant="destructive">
-                        <AlertOctagon className="h-4 w-4" />
-                        <AlertTitle>خطأ !</AlertTitle>
-                        <AlertDescription>
-                            {props.errorMessage}
-                        </AlertDescription>
-                    </Alert>
+                    <Alert
+                        variant="error"
+                        message={props.errorMessage}
+                    />
                 }
             </CardHeader>
             <CardContent>
