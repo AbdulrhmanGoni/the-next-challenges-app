@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
-import { getClient } from "../apolloServerClient";
+import { getClient } from "../lib/apolloServerClient";
 import accessTokenCookieName from "@/constants/accessTokenCookieName";
 import { OperationVariables } from "@apollo/client";
 import { GraphqlQueryType } from "./types";
