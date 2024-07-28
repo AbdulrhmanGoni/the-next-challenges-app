@@ -1,5 +1,5 @@
 import accessTokenCookieName from "@/constants/accessTokenCookieName";
-import useGraphqlMutation from "@/lib/hooks/useGraphqlMutation";
+import useGraphqlMutation from "@/hooks/useGraphqlMutation";
 import { gql } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCookies } from "next-client-cookies";
