@@ -1,40 +1,5 @@
 import graphglQueryAction from "@/graphql/graphglQueryAction";
-import { gql } from "@apollo/client";
-
-const getPostsQuery = gql`
-  query UserFeeds {
-    userFeeds {
-      id
-      title
-      publishedAt
-      category
-      authorId
-      upvotes
-      downvotes
-      userVote
-      author {
-        firstName
-        lastName
-        headline
-        avatar {
-          id
-          src
-        }
-      }
-      thumbnail {
-        src
-      }
-      tags
-      body
-      commentsCount
-      resources {
-        link
-        title
-        type
-      }
-    }
-  }
-`;
+import { getPostsQuery } from "../graphql/UserFeedsQuery";
 
 export default async function getHomePagePosts() {
   "use server";
