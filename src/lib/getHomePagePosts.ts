@@ -1,44 +1,14 @@
 import graphglQueryAction from "@/graphql/graphglQueryAction";
-import { gql } from "@apollo/client";
-
-const getPostsQuery = gql`
-  query UserFeeds {
-    userFeeds {
-      id
-      title
-      publishedAt
-      category
-      authorId
-      upvotes
-      downvotes
-      userVote
-      author {
-        firstName
-        lastName
-        headline
-        avatar {
-          id
-          src
-        }
-      }
-      thumbnail {
-        src
-      }
-      tags
-      body
-      commentsCount
-      resources {
-        link
-        title
-        type
-      }
-    }
-  }
-`;
+import {
+  defaultUserFeedsPaginationModel,
+  getPostsQuery,
+} from "../graphql/UserFeedsQuery";
 
 export default async function getHomePagePosts() {
   "use server";
-
-  const res = await graphglQueryAction<{ userFeeds: Post[] }>(getPostsQuery);
+  const res = await graphglQueryAction<{ userFeeds: UserFeedsResponse }>(
+    getPostsQuery,
+    { paginationOptions: defaultUserFeedsPaginationModel }
+  );
   return res.data.userFeeds;
 }

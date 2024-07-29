@@ -58,7 +58,12 @@ type PostComment = {
   downvotes: number;
 };
 
-type PaginationOptions = {
+type PaginationModel = {
   page: number;
   pageSize: number;
+};
+
+type UserFeedsResponse = {
+  posts: Post[];
+  areThereMore: boolean;
 };
