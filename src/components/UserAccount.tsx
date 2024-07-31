@@ -4,12 +4,14 @@ import { LogInIcon } from "lucide-react";
 import { Skeleton } from "./shadcn-ui/skeleton";
 import UserAccountMenu from "./UserAccountMenu";
 import { useRouter } from "next/navigation";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Button } from "./shadcn-ui/button";
 
 export default function UserAccount() {
 
     const { userData, requestDone } = useUserData();
     const { push } = useRouter();
+    const isSmallScreen = useMediaQuery("(max-width: 640px)");
 
     return (
         userData ?
