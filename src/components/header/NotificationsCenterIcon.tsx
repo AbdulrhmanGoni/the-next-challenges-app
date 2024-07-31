@@ -1,10 +1,10 @@
 import { Bell } from "lucide-react";
-import IconButton from "../IconButton";
+import { Button } from "../shadcn-ui/button";
 
 export default function NotificationsCenterIcon() {
     return (
-        <IconButton className="bg-muted hover:bg-primary-hover p-1.5 rounded-md cursor-pointer">
+        <Button size="icon" className="bg-muted hover:bg-primary-hover">
             <Bell size={22} strokeWidth={1.5} />
-        </IconButton>
+        </Button>
     )
 }
