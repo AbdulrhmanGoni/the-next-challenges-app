@@ -9,25 +9,28 @@ export default function SidebarItem({ item }: { item: SidebarItemType }) {
     const path = usePathname();
     const itemBg = path === item.link ? "bg-primary" : "bg-transparent";
     const itemBgOnHover = path === item.link ? "" : "hover:bg-primary-hover";
-    const linkStyles = `flex items-center gap-3 text-sm py-2 px-3 ${itemBg} ${itemBgOnHover} transition-colors`
+    const linkStyles = `flex items-center gap-3 text-sm sm:py-2 sm:px-3 ${itemBg} ${itemBgOnHover} transition-colors`
 
     return (
         <li>
-            <Tooltip
-                triggerProps={{
-                    className: 'block sm:hidden ' + linkStyles,
-                }}
-                tooltipContent={item.title}
-                contentProps={{ side: "left" }}
-            >
-                <item.Icon size={19} />
-            </Tooltip>
             <Link
                 href={item.link}
-                className={`hidden sm:flex text-sm gap-2 flex-1 ${linkStyles}`}
+                className={`text-sm gap-2 flex-1 ${linkStyles}`}
             >
-                <item.Icon size={19} />
-                <p>{item.title}</p>
+                <Tooltip
+                    triggerProps={{
+                        className: 'sm:hidden',
+                        asChild: true,
+                    }}
+                    tooltipContent={item.title}
+                    contentProps={{ side: "left" }}
+                >
+                    <span className='w-full h-full py-2 px-3'>
+                        <item.Icon size={19} />
+                    </span>
+                </Tooltip>
+                <item.Icon className='hidden sm:inline' size={19} />
+                <p className='hidden sm:inline-block'>{item.title}</p>
             </Link>
         </li>
     )
