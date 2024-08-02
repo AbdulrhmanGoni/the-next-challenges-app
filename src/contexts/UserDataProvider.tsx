@@ -24,12 +24,16 @@ const USER_DATA_QUERY = gql`
 type UserDataState = {
   userData: User | null;
   isLoading: boolean;
+  updateUserDataStateActions: UserDataStateActions
   requestDone: boolean;
   error?: Error;
 }
 
+type UserDataStateActions = {}
+
 export const UserDataContext = createContext<UserDataState>({
   userData: null,
+  updateUserDataStateActions: {},
   isLoading: false,
   requestDone: false,
 });
@@ -42,7 +46,8 @@ export default function UserDataProvider({ children }: React.PropsWithChildren) 
     <UserDataContext.Provider
       value={{
         ...userDataState,
-        userData: userDataState.data?.userData || null
+        userData: userDataState.data?.userData || null,
+        updateUserDataStateActions: {},
       }}
     >
       {children}
