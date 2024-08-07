@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ApolloClientProvider from "./ApolloClientProvider";
 import { CookiesProvider } from 'next-client-cookies/server';
-import UserDataProvider from "./UserDataProvider";
+import UserDataProvider from "../contexts/UserDataProvider";
+import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/shadcn-ui/tooltip";
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
             <TooltipProvider>
               <body className="min-h-screen flex flex-col bg-background antialiased">
                 {children}
+                <SonnerToaster theme="dark" />
               </body>
             </TooltipProvider>
           </UserDataProvider>
