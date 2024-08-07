@@ -67,3 +67,5 @@ type UserFeedsResponse = {
   posts: Post[];
   areThereMore: boolean;
 };
+
+type FeedbackVariants = "error" | "info" | "success" | "warning";
