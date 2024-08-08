@@ -69,3 +69,7 @@ type UserFeedsResponse = {
 };
 
 type FeedbackVariants = "error" | "info" | "success" | "warning";
+
+type PropsWithPostId<P = unknown> = P & {
+  postId: Post["id"];
+};
