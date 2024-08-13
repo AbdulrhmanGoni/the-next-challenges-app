@@ -8,7 +8,7 @@ type PostCommentsContextType = {
     isLoading: boolean,
     error?: string,
     addComment: (comment: PostComment) => void;
-    removeComment: (select: (post: PostComment) => boolean) => void;
+    removeComment: (commentId: PostComment["id"]) => void;
     loadMoreComments: () => void;
     paginationModel: PaginationModel
 }

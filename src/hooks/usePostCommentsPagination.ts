@@ -40,7 +40,7 @@ export default function usePostCommentsPagination({
     loadMore: loadMoreComments,
     paginationModel,
     addData: addComment,
-    removeData: removeComment,
+    removeData,
     areThereMoreData: areThereMoreComments,
   } = usePagination<PostComment, "getPostComments", "comments">({
     Query: getPostCommentsQuery,
@@ -55,6 +55,10 @@ export default function usePostCommentsPagination({
       areThereMoreData: !!postCommentsCount,
     },
   });
+
+  function removeComment(commentId: PostComment["id"]) {
+    removeData((comment) => comment.id === commentId);
+  }
 
   return {
     comments,
