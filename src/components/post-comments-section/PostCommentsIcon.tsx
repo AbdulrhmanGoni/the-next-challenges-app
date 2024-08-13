@@ -1,19 +1,17 @@
 import { MessageSquareText } from 'lucide-react'
 import convertToArabic from '@/lib/convertToArabic'
 import PostCardIconButton from '../post-card/PostCardIconButton'
-import { Dispatch, MouseEvent, SetStateAction } from 'react'
+import { MouseEvent } from 'react'
 
 type PostCommentsIconProps = {
     commentsCount: number;
-    scrollToCommentsSectionState: [boolean, Dispatch<SetStateAction<boolean>>]
+    openPostFullCard(scrollToCommentsSection?: boolean): void
 }
 
-export default function PostCommentsIcon({ commentsCount, scrollToCommentsSectionState }: PostCommentsIconProps) {
-
-    const [scrollToCommentsSection, setScrollToCommentsSection] = scrollToCommentsSectionState
+export default function PostCommentsIcon({ commentsCount, openPostFullCard }: PostCommentsIconProps) {
 
     function handleClick(_e: MouseEvent<HTMLButtonElement>) {
-        !scrollToCommentsSection && setScrollToCommentsSection(true)
+        openPostFullCard(true)
     }
 
     return (
@@ -21,7 +19,6 @@ export default function PostCommentsIcon({ commentsCount, scrollToCommentsSectio
             tooltipContent="التعليقات"
             className='hover:!bg-blue-600/30'
             onClick={handleClick}
-            dontStopPropagation
         >
             <MessageSquareText size={20} />
             {convertToArabic(commentsCount)}
