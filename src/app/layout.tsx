@@ -5,6 +5,7 @@ import { CookiesProvider } from 'next-client-cookies/server';
 import UserDataProvider from "../contexts/UserDataProvider";
 import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/shadcn-ui/tooltip";
+import PostFullCardDialogProvider from "@/contexts/PostFullCardDialogProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +24,10 @@ export default function RootLayout({
           <UserDataProvider>
             <TooltipProvider>
               <body className="min-h-screen flex flex-col bg-background antialiased">
-                {children}
-                <SonnerToaster theme="dark" />
+                <PostFullCardDialogProvider>
+                  {children}
+                  <SonnerToaster theme="dark" />
+                </PostFullCardDialogProvider>
               </body>
             </TooltipProvider>
           </UserDataProvider>
