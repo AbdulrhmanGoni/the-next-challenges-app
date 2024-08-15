@@ -24,7 +24,7 @@ export default function PostCard({ post }: PostCardProps) {
 
     return (
         <Card
-            className="flex group flex-col transition-colors hover:bg-card-hover cursor-pointer"
+            className="flex group flex-col transition hover:bg-card-hover cursor-pointer hover:scale-[1.02]"
             onClick={() => { openPostFullCard() }}
         >
             <CardHeader className="p-3 pb-0">
