@@ -1,21 +1,15 @@
 import getHomePagePosts from "@/lib/getHomePagePosts";
 import HomePagePostsGridError from "./HomePagePostsGridError";
-import PostsGridContainer from "../PostsGridContainer";
+import UserFeedsInfiniteScrollGrid from "./UserFeedsInfiniteScrollGrid";
+import UserFeedsPostsProvider from "@/contexts/UserFeedsPostsProvider";
 
 export default async function HomePagePostsGrid() {
-
     try {
-        const posts = await getHomePagePosts();
+        const firstFeedsFetch = await getHomePagePosts();
         return (
-            <PostsGridContainer>
-                {
-                    posts.map((post) => (
-                        <div key={post.id} className="grid">
-                            {/* `PostCard` component here to display a post  */}
-                        </div>
-                    ))
-                }
-            </PostsGridContainer>
+            <UserFeedsPostsProvider firstFeedsFetch={firstFeedsFetch}>
+                <UserFeedsInfiniteScrollGrid />
+            </UserFeedsPostsProvider>
         )
     } catch {
         return <HomePagePostsGridError />
