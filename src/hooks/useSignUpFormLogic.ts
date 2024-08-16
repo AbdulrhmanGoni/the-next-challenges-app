@@ -5,35 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCookies } from "next-client-cookies";
 import { ControllerRenderProps, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import { logInRawShape } from "./useLogInFormLogic";
-import convertToArabic from "@/lib/convertToArabic";
 import useImagesCloud from "./useImageUploader";
-import {
-  invalidImageTypeMessage,
-  tooLargeImageMessage,
-  validateImageFileSize,
-  validateImageFileType,
-} from "@/utils/imageFileValidation";
-
-const namesRole = (fieldName: string) => {
-  return z
-    .string({ message: `يجب ان تكتب ${fieldName} هنا` })
-    .min(3, `${fieldName} يجب ان يتكون من ${convertToArabic(3)} احرف على الأقل`)
-    .max(50, `${fieldName} يجب ان لا يتخطى ال ${convertToArabic(50)} حرف`);
-};
-
-const formSchema = z.object({
-  firstName: namesRole("الإسم الأول"),
-  lastName: namesRole("الإسم الأخير"),
-  headline: namesRole("العنوان الرئيسي او التخصص"),
-  avatar: z
-    .instanceof(File)
-    .refine(validateImageFileType, invalidImageTypeMessage)
-    .refine(validateImageFileSize, tooLargeImageMessage)
-    .optional(),
-  ...logInRawShape,
-  password2: logInRawShape.password,
-});
+import signUpFormSchema from "@/validation/signUpFormValidation";
 
 const SignUpMutation = gql`
   mutation SignUp($newUser: SignUpUserInput!) {
@@ -50,7 +23,7 @@ type SignUpActionResponse = {
   error?: string;
 };
 
-type SignUpFormSchemaType = z.infer<typeof formSchema>;
+type SignUpFormSchemaType = z.infer<typeof signUpFormSchema>;
 export type SignUpFormType = UseFormReturn<SignUpFormSchemaType>;
 
 export type SignUpFormFieldType<field extends keyof SignUpFormSchemaType> =
@@ -67,7 +40,7 @@ type SignUpMutationPayload = {
 
 export default function useSignUpFormLogic() {
   const form = useForm<SignUpFormSchemaType>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
